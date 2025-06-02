@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Coordenadas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: #34495e;
+            margin-bottom: 20px;
+            font-weight: 500;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px 18px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+        
+        input:focus, select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        .result {
+            background-color: #f8fafc;
+            border-color: #cbd5e0;
+            color: #2d3748;
+            font-weight: 500;
+        }
+        
+        .zone-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .zone-option {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            background: #fff;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            color: #555;
+            transition: all 0.3s ease;
+        }
+        
+        .zone-option.active {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .zone-option:hover:not(.active) {
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin: 35px 0;
+        }
+        
+        button {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-convert {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-convert:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-reset {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(149, 165, 166, 0.3);
+        }
+        
+        .nota {
+            font-size: 12px;
+            color: #718096;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversor de Coordenadas</h1>
+        
+        <div class="section">
+            <div class="section-title">Configuración UTM</div>
+            
+            <div class="input-group">
+                <label>Huso UTM</label>
+                <div class="zone-selector">
+                    <div class="zone-option active" onclick="seleccionarHuso(18)">
+                        18S
+                    </div>
+                    <div class="zone-option" onclick="seleccionarHuso(19)">
+                        19S
+                    </div>
+                </div>
+                <div class="nota">Seleccione el huso UTM correspondiente</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">Coordenadas UTM</div>
+            
+            <div class="input-group">
+                <label for="utmE">UTM E (Este)</label>
+                <input type="text" id="utmE" placeholder="253.090">
+                <div class="nota">Use punto como separador de miles</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="utmN">UTM N (Norte)</label>
+                <input type="text" id="utmN" placeholder="6.073.218">
+                <div class="nota">Use punto como separador de miles</div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn-convert" onclick="convertir()">Convertir</button>
+            <button class="btn-reset" onclick="limpiar()">Limpiar</button>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="section">
+            <div class="section-title">Grados Decimales</div>
+            
+            <div class="input-group">
+                <label for="latitud">Latitud</label>
+                <input type="text" id="latitud" class="result" readonly placeholder="Resultado aparecerá aquí">
+                <div class="nota">Formato con coma decimal</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="longitud">Longitud</label>
+                <input type="text" id="longitud" class="result" readonly placeholder="Resultado aparecerá aquí">
+                <div class="nota">Formato con coma decimal</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let husoSeleccionado = 18; // Por defecto huso 18
+        
+        function seleccionarHuso(huso) {
+            husoSeleccionado = huso;
+            
+            // Actualizar interfaz visual
+            const opciones = document.querySelectorAll('.zone-option');
+            opciones.forEach(opcion => opcion.classList.remove('active'));
+            
+            if (huso === 18) {
+                opciones[0].classList.add('active');
+            } else {
+                opciones[1].classList.add('active');
+            }
+        }
+        
+        function convertir() {
+            // Obtener valores y limpiar formato chileno (quitar puntos de miles)
+            let utmEStr = document.getElementById('utmE').value.replace(/\./g, '');
+            let utmNStr = document.getElementById('utmN').value.replace(/\./g, '');
+            
+            const utmE = parseFloat(utmEStr);
+            const utmN = parseFloat(utmNStr);
+            
+            if (isNaN(utmE) || isNaN(utmN)) {
+                alert('Por favor ingrese valores válidos para ambas coordenadas');
+                return;
+            }
+            
+            // Parámetros WGS84
+            const a = 6378137.0;
+            const f = 1/298.257223563;
+            const k0 = 0.9996;
+            const e2 = 2*f - f*f;
+            const ep2 = e2 / (1 - e2);
+            
+            // Meridiano central según el huso seleccionado
+            const lonOrigin = husoSeleccionado === 18 ? -75.0 : -69.0;
+            const falseEasting = 500000.0;
+            const falseNorthing = 10000000.0; // Para hemisferio sur
+            
+            // Coordenadas relativas al origen de la zona
+            const x = utmE - falseEasting;
+            const y = utmN - falseNorthing;
+            
+            // Cálculo de latitud de pie
+            const M = y / k0;
+            const mu = M / (a * (1 - e2/4 - 3*e2*e2/64 - 5*e2*e2*e2/256));
+            
+            const e1 = (1 - Math.sqrt(1 - e2)) / (1 + Math.sqrt(1 - e2));
+            const phi1rad = mu + (3*e1/2 - 27*e1*e1*e1/32) * Math.sin(2*mu) +
+                            (21*e1*e1/16 - 55*e1*e1*e1*e1/32) * Math.sin(4*mu) +
+                            (151*e1*e1*e1/96) * Math.sin(6*mu);
+            
+            // Parámetros auxiliares
+            const C1 = ep2 * Math.cos(phi1rad) * Math.cos(phi1rad);
+            const T1 = Math.tan(phi1rad) * Math.tan(phi1rad);
+            const N1 = a / Math.sqrt(1 - e2 * Math.sin(phi1rad) * Math.sin(phi1rad));
+            const R1 = a * (1 - e2) / Math.pow(1 - e2 * Math.sin(phi1rad) * Math.sin(phi1rad), 1.5);
+            const D = x / (N1 * k0);
+            
+            // Cálculo de latitud
+            const lat = phi1rad - (N1 * Math.tan(phi1rad) / R1) * 
+                       (D*D/2 - (5 + 3*T1 + 10*C1 - 4*C1*C1 - 9*ep2) * D*D*D*D/24 +
+                       (61 + 90*T1 + 298*C1 + 45*T1*T1 - 252*ep2 - 3*C1*C1) * Math.pow(D,6)/720);
+            
+            // Cálculo de longitud
+            const lonRad = (D - (1 + 2*T1 + C1) * D*D*D/6 +
+                          (5 - 2*C1 + 28*T1 - 3*C1*C1 + 8*ep2 + 24*T1*T1) * Math.pow(D,5)/120) / Math.cos(phi1rad);
+            
+            // Convertir a grados decimales
+            const latDeg = lat * 180 / Math.PI;
+            const lonDeg = lonOrigin + lonRad * 180 / Math.PI;
+            
+            // Formatear salida con coma decimal (formato chileno)
+            document.getElementById('latitud').value = latDeg.toFixed(6).replace('.', ',');
+            document.getElementById('longitud').value = lonDeg.toFixed(6).replace('.', ',');
+        }
+        
+        function limpiar() {
+            document.getElementById('utmE').value = '';
+            document.getElementById('utmN').value = '';
+            document.getElementById('latitud').value = '';
+            document.getElementById('longitud').value = '';
+            // Enfocar el primer campo después de limpiar
+            document.getElementById('utmE').focus();
+        }
+        
+        // Permitir conversión con Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                convertir();
+            }
+        });
+    </script>
+</body>
+</html>
