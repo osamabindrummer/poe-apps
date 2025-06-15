@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conversor de Coordenadas Avanzado</title>
+
     <style>
         * {
             margin: 0;
@@ -463,6 +464,16 @@
             <h1>Conversión Masiva</h1>
             
             <div class="section">
+                <div class="section-title">Pegar Datos de Coordenadas</div>
+                
+                <div class="input-group">
+                    <label for="pasteData">Pega tus datos aquí (formato: Punto, UTM E, UTM N)</label>
+                    <textarea id="pasteData" rows="8" placeholder="Pega tus datos separados por tabulación o espacios. Ejemplo:&#10;&#10;C1	346.638	6.218.177&#10;C2	346.634	6.218.044&#10;C3	347.016	6.218.354&#10;C4	347.041	6.217.972&#10;C5	347.188	6.218.147&#10;C6	347.240	6.218.002"></textarea>
+                    <div class="nota">Formato: Punto [TAB/ESPACIO] UTM_E [TAB/ESPACIO] UTM_N</div>
+                </div>
+            </div>
+            
+            <div class="section">
                 <div class="section-title">Configuración UTM</div>
                 
                 <div class="input-group">
@@ -475,45 +486,16 @@
                             19S
                         </div>
                     </div>
-                    <div class="nota">Seleccione el huso UTM para todas las conversiones masivas</div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <div class="section-title">Subir Imagen de Coordenadas</div>
-                
-                <div class="upload-area" onclick="document.getElementById('imageUpload').click()" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
-                    <div class="upload-icon">📷</div>
-                    <div class="upload-text">Haz clic o arrastra una imagen aquí</div>
-                    <div class="upload-subtext">Formatos soportados: JPG, PNG, GIF</div>
-                </div>
-                
-                <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-                
-                <div id="imagePreview"></div>
-                
-                <div class="error-message" id="errorMessage"></div>
-                <div class="success-message" id="successMessage"></div>
-                
-                <div class="loading" id="loadingIndicator">
-                    <div class="spinner"></div>
-                    Procesando imagen con IA...
-                </div>
-            </div>
-            
-            <div class="section">
-                <div class="section-title">Datos Extraídos</div>
-                
-                <div class="input-group">
-                    <label for="extractedData">Editar datos extraídos (formato: EP-1,706.129,5.690.541)</label>
-                    <textarea id="extractedData" rows="6" placeholder="Los datos extraídos de la imagen aparecerán aquí...&#10;&#10;Formato esperado:&#10;EP-1,706.129,5.690.541&#10;EP-2,705.663,5.691.174&#10;EP-3,705.153,5.690.955"></textarea>
-                    <div class="nota">Cada línea debe contener: Punto,UTM_E,UTM_N</div>
+                    <div class="nota">Seleccione el huso UTM para todas las conversiones</div>
                 </div>
                 
                 <div class="button-group">
                     <button class="btn-convert" onclick="convertirMasivo()">Convertir Todo</button>
-                    <button class="btn-copy" onclick="copiarTabla()">Copiar Tabla</button>
+                    <button class="btn-copy" onclick="copiarTabla()">Copiar Resultados</button>
                 </div>
+                
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
             </div>
             
             <div class="section">
@@ -656,85 +638,12 @@
             document.getElementById('utmE').focus();
         }
         
-        // Funciones para el panel derecho
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.currentTarget.classList.add('dragover');
-        }
-        
-        function handleDragLeave(e) {
-            e.currentTarget.classList.remove('dragover');
-        }
-        
-        function handleDrop(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('dragover');
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleImageFile(files[0]);
-            }
-        }
-        
-        function handleImageUpload(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleImageFile(file);
-            }
-        }
-        
-        function handleImageFile(file) {
-            if (!file.type.startsWith('image/')) {
-                showError('Por favor seleccione un archivo de imagen válido.');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                displayImagePreview(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        function displayImagePreview(imageSrc) {
-            const previewContainer = document.getElementById('imagePreview');
-            previewContainer.innerHTML = `
-                <img src="${imageSrc}" alt="Vista previa" class="preview-image">
-                <div style="text-align: center; margin-top: 10px;">
-                    <button class="btn-secondary" onclick="processImageWithAI()" style="margin: 0;">
-                        Extraer Datos con IA
-                    </button>
-                </div>
-            `;
-        }
-        
-        function processImageWithAI() {
-            const previewImg = document.querySelector('.preview-image');
-            if (!previewImg) {
-                showError('Por favor suba una imagen primero.');
-                return;
-            }
-            
-            showLoading(true);
-            hideMessages();
-            
-            // Simular procesamiento con IA (en una implementación real, aquí enviarías la imagen a un servicio de IA)
-            setTimeout(() => {
-                // Datos simulados basados en la imagen de ejemplo
-                const simulatedData = `EP-1,706.129,5.690.541
-EP-2,705.663,5.691.174
-EP-3,705.153,5.690.955`;
-                
-                document.getElementById('extractedData').value = simulatedData;
-                showLoading(false);
-                showSuccess('¡Datos extraídos exitosamente! Revise y edite si es necesario antes de convertir.');
-            }, 2000);
-        }
+
         
         function convertirMasivo() {
-            const data = document.getElementById('extractedData').value.trim();
+            const data = document.getElementById('pasteData').value.trim();
             if (!data) {
-                showError('Por favor ingrese o extraiga datos de coordenadas primero.');
+                showError('Por favor pegue datos de coordenadas primero.');
                 return;
             }
             
@@ -746,9 +655,11 @@ EP-3,705.153,5.690.955`;
             tbody.innerHTML = '';
             
             for (const line of lines) {
-                const parts = line.split(',').map(part => part.trim());
+                // Dividir por tabulación o múltiples espacios
+                const parts = line.split(/[\t\s]+/).filter(part => part.trim());
+                
                 if (parts.length !== 3) {
-                    showError(`Formato incorrecto en línea: ${line}. Use formato: Punto,UTM_E,UTM_N`);
+                    showError(`Formato incorrecto en línea: ${line}. Use formato: Punto UTM_E UTM_N`);
                     return;
                 }
                 
@@ -775,7 +686,7 @@ EP-3,705.153,5.690.955`;
                 
                 coordinatesData.push(coordData);
                 
-                // Agregar fila a la tabla con el nuevo orden: Punto, Latitud, Longitud, UTM E, UTM N
+                // Agregar fila a la tabla con el orden: Punto, Latitud, Longitud, UTM E, UTM N
                 const row = tbody.insertRow();
                 row.innerHTML = `
                     <td>${punto}</td>
@@ -867,6 +778,8 @@ EP-3,705.153,5.690.955`;
             document.getElementById('errorMessage').style.display = 'none';
             document.getElementById('successMessage').style.display = 'none';
         }
+        
+
         
         // Permitir conversión con Enter en el panel izquierdo
         document.addEventListener('keypress', function(e) {
