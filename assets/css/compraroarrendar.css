@@ -1,0 +1,406 @@
+/* Paleta y tipografía base para la app "Comprar vs Arrendar" */
+:root {
+    --color-background-start: #f6f9fc;
+    --color-background-end: #e9f2f9;
+    --color-text-primary: #2d3748;
+    --color-text-secondary: #4a5568;
+    --color-accent-buy: #e53e3e;
+    --color-accent-rent: #38a169;
+    --color-accent-highlight: #4299e1;
+    --color-panel-bg: #ffffff;
+    --color-panel-shadow: rgba(0, 0, 0, 0.08);
+    --font-family-base: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-base);
+}
+
+body {
+    background: linear-gradient(135deg, var(--color-background-start) 0%, var(--color-background-end) 100%);
+    min-height: 100vh;
+    color: var(--color-text-primary);
+    padding: 20px;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    color: #1a365d;
+    font-size: clamp(2rem, 2.5vw + 1rem, 2.75rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    color: var(--color-text-secondary);
+    font-size: clamp(1rem, 1vw + 0.8rem, 1.1rem);
+}
+
+.comparison-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+        "buy rent"
+        "comparison comparison";
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.buy-panel {
+    grid-area: buy;
+}
+
+.rent-panel {
+    grid-area: rent;
+}
+
+.panel {
+    background: var(--color-panel-bg);
+    padding: clamp(1.5rem, 1.5vw + 1rem, 2rem);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px var(--color-panel-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.panel-header {
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid;
+}
+
+.buy-panel .panel-header {
+    border-color: var(--color-accent-buy);
+}
+
+.rent-panel .panel-header {
+    border-color: var(--color-accent-rent);
+}
+
+.panel-header h2 {
+    font-size: clamp(1.6rem, 1.5vw + 1.2rem, 1.8rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.buy-panel .panel-header h2 {
+    color: var(--color-accent-buy);
+}
+
+.rent-panel .panel-header h2 {
+    color: var(--color-accent-rent);
+}
+
+.panel-header .icon {
+    font-size: clamp(2.5rem, 2vw + 2rem, 3rem);
+    margin-bottom: 1rem;
+}
+
+.comparison-section {
+    display: grid;
+    gap: 2rem;
+    grid-area: comparison;
+}
+
+.comparison-header {
+    text-align: center;
+    font-size: clamp(1.8rem, 1.5vw + 1.4rem, 2rem);
+    color: #1a365d;
+    font-weight: 700;
+}
+
+.panel-content {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+}
+
+label a {
+    color: var(--color-accent-highlight);
+    text-decoration: none;
+}
+
+label a:hover {
+    text-decoration: underline;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-accent-highlight);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+.readonly-input {
+    background: #e2e8f0 !important;
+    color: var(--color-text-secondary);
+    cursor: not-allowed;
+}
+
+.calculate-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #3182ce, #63b3ed);
+    color: white;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(66, 153, 225, 0.25);
+}
+
+.calculate-btn:active {
+    transform: translateY(0);
+}
+
+.monthly-payment-container {
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(49, 130, 206, 0.12), rgba(99, 179, 237, 0.18));
+    border-radius: 14px;
+    text-align: center;
+}
+
+.monthly-payment-container h3 {
+    font-size: 1.25rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.monthly-payment-container .amount {
+    font-size: clamp(1.8rem, 2vw + 1.5rem, 2.2rem);
+    font-weight: 700;
+    color: #2c5282;
+}
+
+.results-summary {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.result-card {
+    background: rgba(237, 242, 247, 0.6);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.result-card h3 {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.result-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.comparison-results {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.comparison-item {
+    position: relative;
+    background: rgba(226, 232, 240, 0.45);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(203, 213, 224, 0.7);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comparison-item.winner {
+    border-color: rgba(56, 161, 105, 0.8);
+    background: rgba(56, 161, 105, 0.12);
+    box-shadow: 0 8px 16px rgba(56, 161, 105, 0.15);
+}
+
+.comparison-item.loser {
+    opacity: 0.75;
+}
+
+.comparison-item h4 {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+.comparison-item .value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.comparison-item.winner .value {
+    color: var(--color-accent-rent);
+}
+
+.comparison-item.loser .value {
+    color: var(--color-accent-buy);
+}
+
+.difference-item .value {
+    color: #1a365d;
+}
+
+.recommendation {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2c5282;
+    padding: 1rem;
+    background: rgba(226, 232, 240, 0.45);
+    border-radius: 12px;
+}
+
+.scenarios {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.scenario-card {
+    background: #edf2f7;
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid rgba(203, 213, 224, 0.75);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+}
+
+.scenario-card-buy {
+    border-left: 4px solid var(--color-accent-buy);
+}
+
+.scenario-card-rent {
+    border-left: 4px solid var(--color-accent-rent);
+}
+
+.scenario-card h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-text-primary);
+}
+
+.scenario-card p {
+    margin: 0;
+}
+
+.helper-text {
+    margin-top: 0.5rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.callout {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: rgba(49, 151, 149, 0.12);
+    border: 1px solid rgba(49, 151, 149, 0.4);
+    color: #285e61;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.callout .icon {
+    font-size: 1.5rem;
+}
+
+.footer-note {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1100px) {
+    .comparison-container {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "buy"
+            "rent"
+            "comparison";
+        max-width: 900px;
+    }
+
+    .panel {
+        padding: 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 16px;
+    }
+
+    .panel {
+        border-radius: 16px;
+        padding: 1.5rem;
+    }
+
+    .panel-header {
+        margin-bottom: 0.5rem;
+    }
+
+    .comparison-item {
+        padding: 0.9rem 1rem;
+    }
+
+    .recommendation {
+        font-size: 1.2rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.001ms !important;
+        animation-duration: 0.001ms !important;
+    }
+}

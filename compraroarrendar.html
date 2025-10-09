@@ -4,272 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparador: Comprar vs Arrendar e Invertir</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f6f9fc 0%, #e9f2f9 100%);
-            min-height: 100vh;
-            color: #2d3748;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .header h1 {
-            color: #1a365d;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #4a5568;
-            font-size: 1.1rem;
-        }
-
-        .comparison-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .panel {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-        }
-
-        .panel-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid;
-        }
-
-        .buy-panel .panel-header {
-            border-color: #e53e3e;
-        }
-
-        .rent-panel .panel-header {
-            border-color: #38a169;
-        }
-
-        .panel-header h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .buy-panel .panel-header h2 {
-            color: #e53e3e;
-        }
-
-        .rent-panel .panel-header h2 {
-            color: #38a169;
-        }
-
-        .panel-header .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            color: #4a5568;
-            font-weight: 600;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #4299e1;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
-        }
-
-        .readonly-input {
-            background: #e2e8f0 !important;
-            color: #4a5568;
-            cursor: not-allowed;
-        }
-
-        .calculate-btn {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 1.5rem 0;
-        }
-
-        .buy-panel .calculate-btn {
-            background: #e53e3e;
-            color: white;
-        }
-
-        .buy-panel .calculate-btn:hover {
-            background: #c53030;
-            transform: translateY(-2px);
-        }
-
-        .rent-panel .calculate-btn {
-            background: #38a169;
-            color: white;
-        }
-
-        .rent-panel .calculate-btn:hover {
-            background: #2f855a;
-            transform: translateY(-2px);
-        }
-
-        .results {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background: #f8fafc;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .result-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .result-label {
-            color: #4a5568;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .result-value {
-            font-weight: 700;
-            color: #2d3748;
-        }
-
-        .comparison-section {
-            grid-column: 1 / -1;
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            margin-top: 2rem;
-        }
-
-        .comparison-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #1a365d;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 2rem;
-            text-align: center;
-        }
-
-        .comparison-item {
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-        }
-
-        .comparison-item h3 {
-            color: #4a5568;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .comparison-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .winner {
-            background: #f0fff4;
-            border-color: #38a169;
-        }
-
-        .winner .comparison-value {
-            color: #38a169;
-        }
-
-        .loser {
-            background: #fef5e7;
-            border-color: #ed8936;
-        }
-
-        .loser .comparison-value {
-            color: #ed8936;
-        }
-
-        .tooltip {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        @media (max-width: 768px) {
-            .comparison-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .comparison-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .panel {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/compraroarrendar.css">
 </head>
 <body>
     <div class="header">
@@ -285,43 +20,44 @@
                 <h2>Comprar Propiedad</h2>
                 <p>Crédito hipotecario</p>
             </div>
-            
-            <div class="input-group">
-                <label for="homePrice">Valor de la Propiedad (CLP)</label>
-                <input type="text" id="homePrice" placeholder="Ej: 100.000.000" oninput="formatNumber(this)">
-            </div>
-            
-            <div class="input-group">
-                <label for="downPayment">Pie Inicial (CLP)</label>
-                <input type="text" id="downPayment" placeholder="Ej: 20.000.000" oninput="formatNumber(this); updateInitialInvestment()">
-            </div>
-            
-            <div class="input-group">
-                <label for="interestRate">Tasa de Interés Anual (%)</label>
-                <input type="number" id="interestRate" placeholder="Ej: 5" step="0.01" value="5">
-            </div>
-            
-            <div class="input-group">
-                <label for="loanTerm">Plazo del Crédito (años)</label>
-                <input type="number" id="loanTerm" placeholder="Ej: 25" value="25">
-            </div>
-            
-            <button class="calculate-btn" onclick="calculateAll()">Calcular Compra</button>
-            
-            <div class="results">
-                <div class="result-item">
-                    <span class="result-label">Pie Inicial:</span>
-                    <span class="result-value">$<span id="downPaymentResult">0</span></span>
+            <div class="panel-content">
+                <div class="input-group">
+                    <label for="homePrice">Valor de la Propiedad (CLP)</label>
+                    <input type="text" id="homePrice" class="currency-input" placeholder="Ej: 100.000.000">
                 </div>
-                <div class="result-item">
-                    <span class="result-label">Pago Mensual:</span>
-                    <span class="result-value">$<span id="monthlyPayment">0</span></span>
+                
+                <div class="input-group">
+                    <label for="downPayment">Pie inicial 20% (CLP)</label>
+                    <input type="text" id="downPayment" class="currency-input" placeholder="Ej: 20.000.000">
                 </div>
-                <div class="result-item">
-                    <span class="result-label">Costo Total:</span>
-                    <span class="result-value">$<span id="totalCostBuy">0</span></span>
+                
+                <div class="input-group">
+                    <label for="interestRate">Tasa de Interés Anual (%) – <a href="https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_TASA_INTERES/MN_TASA_INTERES_09/TSF_27A/T5224" target="_blank" rel="noopener noreferrer">Datos Banco Central</a></label>
+                    <input type="number" id="interestRate" placeholder="Ej: 5" step="0.01" value="5">
+                </div>
+                
+                <div class="input-group">
+                    <label for="loanTerm">Plazo del Crédito (años)</label>
+                    <input type="number" id="loanTerm" placeholder="Ej: 25" value="25">
+                </div>
+                
+                <button type="button" class="calculate-btn">Calcular Compra</button>
+
+                <div class="monthly-payment-container">
+                    <h3>Dividendo mensual estimado</h3>
+                    <div class="amount">$<span id="monthlyPayment">0</span></div>
                 </div>
 
+                <div class="results-summary">
+                    <div class="result-card">
+                        <h3>Pie Inicial</h3>
+                        <div class="value">$<span id="downPaymentResult">0</span></div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Costo Total</h3>
+                        <div class="value">$<span id="totalCostBuy">0</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -332,254 +68,89 @@
                 <h2>Arrendar e Invertir</h2>
                 <p>Invertir la diferencia</p>
             </div>
-            
-            <div class="input-group">
-                <label for="monthlyRent">Arriendo Mensual (CLP)</label>
-                <input type="text" id="monthlyRent" placeholder="Ej: 800.000" oninput="formatNumber(this)">
-            </div>
-            
-            <div class="input-group">
-                <label for="initialInvestment">Inversión Inicial (CLP)</label>
-                <input type="text" id="initialInvestment" placeholder="Automático desde pie inicial" readonly class="readonly-input">
-            </div>
-            
-            <div class="input-group">
-                <label for="monthlyInvestment">Inversión Mensual Adicional (CLP)</label>
-                <input type="text" id="monthlyInvestment" placeholder="Se calcula automáticamente" readonly class="readonly-input">
-            </div>
-            
-            <div class="input-group">
-                <label for="annualReturn">Rentabilidad Anual (%)</label>
-                <input type="number" id="annualReturn" placeholder="Ej: 7" step="0.1" value="7">
-            </div>
-            
-            <button class="calculate-btn" onclick="calculateAll()">Calcular Inversión</button>
-            
-            <div class="results">
-                <div class="result-item">
-                    <span class="result-label">Total Arriendos:</span>
-                    <span class="result-value">$<span id="totalRent">0</span></span>
+            <div class="panel-content">
+                <div class="input-group">
+                    <label for="monthlyRent">Arriendo Mensual (CLP)</label>
+                    <input type="text" id="monthlyRent" class="currency-input" placeholder="Ej: 800.000">
                 </div>
-                <div class="result-item">
-                    <span class="result-label">Total Aportes:</span>
-                    <span class="result-value">$<span id="totalInvested">0</span></span>
+                
+                <div class="input-group">
+                    <label for="initialInvestment">Inversión Inicial (CLP)</label>
+                    <input type="text" id="initialInvestment" placeholder="Automático desde pie inicial" readonly class="readonly-input">
                 </div>
-                <div class="result-item">
-                    <span class="result-label">Valor Final Inversión:</span>
-                    <span class="result-value">$<span id="finalInvestmentValue">0</span></span>
+                
+                <div class="input-group">
+                    <label for="monthlyInvestment">Inversión Mensual Adicional (CLP)</label>
+                    <input type="text" id="monthlyInvestment" placeholder="Se calcula automáticamente" readonly class="readonly-input">
+                </div>
+                
+                <div class="input-group">
+                    <label for="annualReturn">Rentabilidad Anual (%)</label>
+                    <input type="number" id="annualReturn" placeholder="Ej: 7" step="0.1" value="7">
                 </div>
 
+                <div class="callout">
+                    <span class="icon">💡</span>
+                    <span>Si el dividendo es mayor que el arriendo, usamos la diferencia como propuesta de inversión mensual.</span>
+                </div>
+                
+                <button type="button" class="calculate-btn">Calcular Inversión</button>
+                
+                <div class="results-summary">
+                    <div class="result-card">
+                        <h3>Total Arriendos</h3>
+                        <div class="value">$<span id="totalRent">0</span></div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Total Aportes</h3>
+                        <div class="value">$<span id="totalInvested">0</span></div>
+                    </div>
+                    <div class="result-card">
+                        <h3>Valor Final Inversión</h3>
+                        <div class="value">$<span id="finalInvestmentValue">0</span></div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Sección de Comparación -->
         <div class="comparison-section">
             <h2 class="comparison-header">🏆 Comparación Final</h2>
-            <div style="display: grid; gap: 2rem; margin-bottom: 2rem;">
-                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #e53e3e;">
-                    <h3 style="color: #e53e3e; margin-bottom: 1rem; font-size: 1.1rem;">📊 Escenario: Comprar Propiedad</h3>
-                    <p id="buyScenario" style="color: #4a5568; line-height: 1.6;">Complete los datos para ver el análisis...</p>
+            <div class="scenarios">
+                <div class="scenario-card scenario-card-buy">
+                    <h3>📊 Escenario: Comprar Propiedad</h3>
+                    <p id="buyScenario">Completa los datos para ver el análisis...</p>
                 </div>
                 
-                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #38a169;">
-                    <h3 style="color: #38a169; margin-bottom: 1rem; font-size: 1.1rem;">📈 Escenario: Arrendar e Invertir</h3>
-                    <p id="rentScenario" style="color: #4a5568; line-height: 1.6;">Complete los datos para ver el análisis...</p>
+                <div class="scenario-card scenario-card-rent">
+                    <h3>📈 Escenario: Arrendar e Invertir</h3>
+                    <p id="rentScenario">Completa los datos para ver el análisis...</p>
                 </div>
             </div>
             
-            <div class="comparison-grid">
+            <div class="comparison-results">
                 <div class="comparison-item" id="buyComparison">
-                    <h3>Patrimonio al Comprar</h3>
-                    <div class="comparison-value" id="buyPatrimony">$0</div>
-                    <div class="tooltip">Valor final de la propiedad con apreciación</div>
+                    <h4>Patrimonio al Comprar</h4>
+                    <div class="value" id="buyPatrimony">$0</div>
+                    <p class="helper-text">Valor final de la propiedad con apreciación</p>
                 </div>
                 
                 <div class="comparison-item" id="rentComparison">
-                    <h3>Patrimonio al Arrendar</h3>
-                    <div class="comparison-value" id="rentPatrimony">$0</div>
-                    <div class="tooltip">Valor final de la inversión</div>
+                    <h4>Patrimonio al Arrendar</h4>
+                    <div class="value" id="rentPatrimony">$0</div>
+                    <p class="helper-text">Valor final de la inversión</p>
                 </div>
                 
-                <div class="comparison-item" id="differenceComparison">
-                    <h3>Diferencia</h3>
-                    <div class="comparison-value" id="difference">$0</div>
-                    <div class="tooltip" id="recommendation">Mejor opción</div>
+                <div class="comparison-item difference-item" id="differenceComparison">
+                    <h4>Diferencia</h4>
+                    <div class="value" id="difference">$0</div>
+                    <p class="helper-text">Distancia entre ambos patrimonios</p>
                 </div>
             </div>
+
+            <div class="recommendation" id="recommendation">Completa los datos para ver la recomendación.</div>
         </div>
     </div>
-
-    <script>
-        function formatNumber(input) {
-            let value = input.value.replace(/\D/g, '');
-            if (value === '') return;
-            input.value = parseInt(value).toLocaleString('es-CL');
-        }
-
-        function unformatNumber(value) {
-            return parseInt(value.replace(/\D/g, '')) || 0;
-        }
-
-        function updateInitialInvestment() {
-            const downPaymentValue = document.getElementById('downPayment').value;
-            document.getElementById('initialInvestment').value = downPaymentValue;
-        }
-
-        function updateMonthlyInvestment(monthlyPayment) {
-            const monthlyRent = unformatNumber(document.getElementById('monthlyRent').value);
-            if (monthlyPayment && monthlyRent && monthlyPayment > monthlyRent) {
-                const difference = monthlyPayment - monthlyRent;
-                document.getElementById('monthlyInvestment').value = difference.toLocaleString('es-CL');
-            } else {
-                document.getElementById('monthlyInvestment').value = '';
-            }
-        }
-
-        function calculateMortgage() {
-            const homePrice = unformatNumber(document.getElementById('homePrice').value);
-            const downPayment = unformatNumber(document.getElementById('downPayment').value);
-            const interestRate = parseFloat(document.getElementById('interestRate').value);
-            const loanTerm = parseInt(document.getElementById('loanTerm').value);
-
-            if (!homePrice || !downPayment || !interestRate || !loanTerm) return null;
-
-            const loanAmount = homePrice - downPayment;
-            const monthlyRate = interestRate / 100 / 12;
-            const numberOfPayments = loanTerm * 12;
-            const monthlyPayment = Math.round(loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1));
-
-            const totalPayments = monthlyPayment * numberOfPayments;
-            const totalCost = totalPayments + downPayment;
-            
-            // Actualizar UI
-            document.getElementById('downPaymentResult').textContent = downPayment.toLocaleString('es-CL');
-            document.getElementById('monthlyPayment').textContent = monthlyPayment.toLocaleString('es-CL');
-            document.getElementById('totalCostBuy').textContent = totalCost.toLocaleString('es-CL');
-            
-            // Actualizar inversión mensual automáticamente
-            updateMonthlyInvestment(monthlyPayment);
-
-            return {
-                monthlyPayment,
-                totalCost,
-                downPayment,
-                loanTerm,
-                homePrice
-            };
-        }
-
-        function calculateInvestment() {
-            const monthlyRent = unformatNumber(document.getElementById('monthlyRent').value);
-            const initialInvestment = unformatNumber(document.getElementById('initialInvestment').value);
-            const monthlyInvestment = unformatNumber(document.getElementById('monthlyInvestment').value);
-            const annualReturn = parseFloat(document.getElementById('annualReturn').value);
-            const loanTerm = parseInt(document.getElementById('loanTerm').value) || 25;
-
-            if (!monthlyRent || !initialInvestment || !annualReturn) return null;
-
-            const monthlyReturn = annualReturn / 12 / 100;
-            const months = loanTerm * 12;
-
-            // Fórmula correcta del valor futuro de una anualidad compuesta con monto inicial:
-            // VF = MontoInicial * (1 + i)^n + AporteMensual * [((1 + i)^n - 1) / i]
-            
-            const totalInvested = initialInvestment + (monthlyInvestment * months);
-            
-            // Valor futuro del monto inicial
-            const futureValueInitial = initialInvestment * Math.pow(1 + monthlyReturn, months);
-            
-            // Valor futuro de los aportes mensuales (anualidad)
-            const futureValueAnnuity = monthlyInvestment * ((Math.pow(1 + monthlyReturn, months) - 1) / monthlyReturn);
-            
-            // Valor total final
-            const finalInvestmentValue = Math.round(futureValueInitial + futureValueAnnuity);
-            
-            const totalRent = monthlyRent * months;
-            const netGain = finalInvestmentValue - totalInvested;
-
-            // Actualizar UI
-            document.getElementById('totalRent').textContent = totalRent.toLocaleString('es-CL');
-            document.getElementById('totalInvested').textContent = totalInvested.toLocaleString('es-CL');
-            document.getElementById('finalInvestmentValue').textContent = finalInvestmentValue.toLocaleString('es-CL');
-
-            return {
-                totalRent,
-                totalInvested,
-                finalInvestmentValue,
-                netGain
-            };
-        }
-
-        function calculateAll() {
-            const buyResults = calculateMortgage();
-            const rentResults = calculateInvestment();
-
-            if (buyResults && rentResults) {
-                // Calcular valor final de la propiedad (4% anual de apreciación)
-                const propertyGrowthRate = 0.04;
-                const finalPropertyValue = Math.round(buyResults.homePrice * Math.pow(1 + propertyGrowthRate, buyResults.loanTerm));
-                
-                // Patrimonio al comprar (valor final de la propiedad con apreciación)
-                const buyPatrimony = finalPropertyValue;
-                
-                // Patrimonio al arrendar (valor final de la inversión)
-                const rentPatrimony = rentResults.finalInvestmentValue;
-
-                const difference = rentPatrimony - buyPatrimony;
-
-                // Actualizar textos descriptivos
-                const buyScenario = `Al comprar una vivienda por $${buyResults.homePrice.toLocaleString('es-CL')}, aportando con un pie de $${buyResults.downPayment.toLocaleString('es-CL')} y pagando un dividendo mensual de $${buyResults.monthlyPayment.toLocaleString('es-CL')}, habrás pagado al final $${buyResults.totalCost.toLocaleString('es-CL')} (costo total). Al término de ${buyResults.loanTerm} años, con una apreciación de 4% anual, esa propiedad podría ser vendida por al menos $${finalPropertyValue.toLocaleString('es-CL')}.`;
-                
-                const initialInvestmentAmount = unformatNumber(document.getElementById('initialInvestment').value);
-                const rentScenario = `Al arrendar una vivienda y optar por invertir la diferencia, con un monto inicial de $${initialInvestmentAmount.toLocaleString('es-CL')} (igual al ahorro para el pie de la casa), luego de ${buyResults.loanTerm} años con una rentabilidad de ${document.getElementById('annualReturn').value}% anual, tendrás un saldo de $${rentResults.finalInvestmentValue.toLocaleString('es-CL')}.`;
-
-                document.getElementById('buyScenario').textContent = buyScenario;
-                document.getElementById('rentScenario').textContent = rentScenario;
-
-                // Actualizar comparación
-                document.getElementById('buyPatrimony').textContent = `$${buyPatrimony.toLocaleString('es-CL')}`;
-                document.getElementById('rentPatrimony').textContent = `$${rentPatrimony.toLocaleString('es-CL')}`;
-                document.getElementById('difference').textContent = `$${Math.abs(difference).toLocaleString('es-CL')}`;
-
-                // Determinar ganador
-                const buyComp = document.getElementById('buyComparison');
-                const rentComp = document.getElementById('rentComparison');
-                const diffComp = document.getElementById('differenceComparison');
-                const recommendation = document.getElementById('recommendation');
-
-                // Resetear clases
-                buyComp.className = 'comparison-item';
-                rentComp.className = 'comparison-item';
-
-                if (difference > 0) {
-                    rentComp.classList.add('winner');
-                    buyComp.classList.add('loser');
-                    recommendation.textContent = '🏆 Mejor arrendar e invertir';
-                } else {
-                    buyComp.classList.add('winner');
-                    rentComp.classList.add('loser');
-                    recommendation.textContent = '🏆 Mejor comprar';
-                }
-            }
-        }
-
-        // Agregar event listener al arriendo mensual para recalcular inversión automáticamente
-        document.getElementById('monthlyRent').addEventListener('input', function() {
-            formatNumber(this);
-            // Si ya hay un pago mensual calculado, actualizar la inversión mensual
-            const monthlyPaymentElement = document.getElementById('monthlyPayment');
-            if (monthlyPaymentElement.textContent !== '0') {
-                const monthlyPayment = parseInt(monthlyPaymentElement.textContent.replace(/\D/g, ''));
-                updateMonthlyInvestment(monthlyPayment);
-            }
-        });
-
-        // Inicializar al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            // Si hay un valor inicial en el pie, copiarlo
-            updateInitialInvestment();
-        });
-    </script>
+    <script src="assets/js/compraroarrendar.js"></script>
 </body>
 </html>
-

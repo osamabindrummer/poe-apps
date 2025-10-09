@@ -4,21 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📈 Calculadora de Inversiones</title>
+    <link rel="stylesheet" href="assets/css/inversiones.css">
+    <script src="assets/js/inversiones.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#5D5CDE',
-                        secondary: '#9333ea',
-                        accent: '#06b6d4'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-300">
     <div class="container mx-auto px-4 py-8 max-w-7xl">
@@ -35,7 +24,7 @@
         <!-- Main Content -->
         <div class="grid lg:grid-cols-5 gap-8">
             <!-- Left Panel - Calculator -->
-            <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8">
+            <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 glass-surface">
                 <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center">
                     🧮 Parámetros de Inversión
                 </h2>
@@ -105,27 +94,27 @@
                     <!-- Button -->
                     <button 
                         type="submit"
-                        class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200 text-lg"
+                        class="w-full primary-button text-white font-semibold py-4 px-6 rounded-lg transition-transform duration-200 text-lg"
                     >
                         🚀 Calcular Inversión
                     </button>
                 </form>
 
                 <!-- Results -->
-                <div id="results" class="mt-8 p-6 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl">
+                <div id="results" class="mt-8 p-6 bg-gradient-to-r from-primary/10 to-secondary/10 dark:from-primary/20 dark:to-secondary/20 rounded-xl results-card">
                     <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
                         📈 Resultado de tu Inversión
                     </h3>
                     
                     <div class="space-y-3">
-                        <div class="flex justify-between items-center">
+                        <div class="result-metric">
                             <span class="text-gray-600 dark:text-gray-400">Total Aportado:</span>
                             <span id="totalAportado" class="font-semibold text-gray-800 dark:text-white">
                                 $0 CLP
                             </span>
                         </div>
                         
-                        <div class="flex justify-between items-center">
+                        <div class="result-metric">
                             <span class="text-gray-600 dark:text-gray-400">Ganancias:</span>
                             <span id="ganancias" class="font-semibold text-green-600 dark:text-green-400">
                                 $0 CLP
@@ -134,9 +123,9 @@
                         
                         <hr class="border-gray-300 dark:border-gray-600">
                         
-                        <div class="flex justify-between items-center">
+                        <div class="result-metric">
                             <span class="text-lg font-semibold text-gray-700 dark:text-gray-300">Monto Final:</span>
-                            <span id="montoFinal" class="text-2xl md:text-3xl font-bold text-primary">
+                            <span id="montoFinal" class="text-primary metric-high">
                                 $0 CLP
                             </span>
                         </div>
@@ -145,233 +134,32 @@
             </div>
 
             <!-- Right Panel - Chart -->
-            <div class="lg:col-span-3 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8">
+            <div class="lg:col-span-3 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 glass-surface">
                 <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center">
                     📊 Crecimiento de la Inversión
                 </h2>
                 
-                <div class="relative h-96">
+                <div class="chart-wrapper">
                     <canvas id="growthChart"></canvas>
                 </div>
                 
-                <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center">
-                    <span class="inline-flex items-center">
-                        <span class="w-3 h-3 bg-primary rounded-full mr-2"></span>
+                <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 text-center chart-legend">
+                    <span class="inline-flex items-center legend-aportes">
                         Aportes Acumulados
                     </span>
-                    <span class="inline-flex items-center ml-4">
-                        <span class="w-3 h-3 bg-green-500 rounded-full mr-2"></span>
+                    <span class="inline-flex items-center ml-4 legend-valor">
                         Valor Total con Intereses
                     </span>
+                </div>
+
+                <div class="investment-callout" id="investmentCallout">
+                    <div class="callout-title">💡 Impacto de invertir vs ahorrar</div>
+                    <div class="callout-body">
+                        Si solo ahorras <span class="callout-highlight" id="calloutSavings">$0</span> durante <span class="callout-highlight" id="calloutYears">0</span> años, tendrás <span class="callout-highlight" id="calloutSavingsEnd">$0</span>. Al invertir con una rentabilidad anual de <span class="callout-highlight" id="calloutRate">0%</span>, podrías alcanzar <span class="callout-highlight" id="calloutInvestedEnd">$0</span>, es decir <span class="callout-highlight" id="calloutGain">$0</span> adicionales.
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Dark mode detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
-
-        let growthChart = null;
-
-        // Format number to CLP currency
-        function formatCLP(amount) {
-            return new Intl.NumberFormat('es-CL', {
-                style: 'currency',
-                currency: 'CLP',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(amount);
-        }
-
-        // Calculate compound interest with monthly contributions
-        function calculateInvestment(inicial, mensual, años, rentabilidadAnual) {
-            const meses = años * 12;
-            const tasaMensual = rentabilidadAnual / 100 / 12;
-            
-            let data = [];
-            let aportes = [];
-            let valores = [];
-            
-            for (let año = 0; año <= años; año++) {
-                const mesesTranscurridos = año * 12;
-                
-                // Valor futuro del aporte inicial
-                const valorInicial = inicial * Math.pow(1 + tasaMensual, mesesTranscurridos);
-                
-                // Valor futuro de los aportes mensuales
-                let valorAportes = 0;
-                if (mesesTranscurridos > 0 && tasaMensual > 0) {
-                    valorAportes = mensual * ((Math.pow(1 + tasaMensual, mesesTranscurridos) - 1) / tasaMensual);
-                }
-                
-                const totalAportado = inicial + (mensual * mesesTranscurridos);
-                const valorTotal = valorInicial + valorAportes;
-                
-                aportes.push(totalAportado);
-                valores.push(valorTotal);
-                
-                data.push({
-                    año: año,
-                    aportesAcumulados: totalAportado,
-                    valorTotal: valorTotal,
-                    ganancias: valorTotal - totalAportado
-                });
-            }
-            
-            return data;
-        }
-
-        // Update chart
-        function updateChart(data) {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            
-            if (growthChart) {
-                growthChart.destroy();
-            }
-            
-            const isDark = document.documentElement.classList.contains('dark');
-            const textColor = isDark ? '#e5e7eb' : '#374151';
-            const gridColor = isDark ? '#4b5563' : '#e5e7eb';
-            
-            growthChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(d => `Año ${d.año}`),
-                    datasets: [
-                        {
-                            label: 'Aportes Acumulados',
-                            data: data.map(d => d.aportesAcumulados),
-                            borderColor: '#5D5CDE',
-                            backgroundColor: 'rgba(93, 92, 222, 0.1)',
-                            fill: false,
-                            tension: 0.4,
-                            borderWidth: 3
-                        },
-                        {
-                            label: 'Valor Total',
-                            data: data.map(d => d.valorTotal),
-                            borderColor: '#10b981',
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            fill: '+1',
-                            tension: 0.4,
-                            borderWidth: 3
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                color: gridColor
-                            },
-                            ticks: {
-                                color: textColor,
-                                callback: function(value) {
-                                    return formatCLP(value);
-                                }
-                            }
-                        },
-                        x: {
-                            grid: {
-                                color: gridColor
-                            },
-                            ticks: {
-                                color: textColor
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: textColor
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Format number with thousands separator
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
-
-        // Remove format from number
-        function parseFormattedNumber(str) {
-            return parseFloat(str.replace(/\./g, '')) || 0;
-        }
-
-        // Handle currency input formatting
-        function handleCurrencyInput(input) {
-            let value = input.value.replace(/\./g, '');
-            let numericValue = parseFloat(value) || 0;
-            
-            if (numericValue > 0) {
-                input.value = formatNumber(numericValue);
-            }
-            input.setAttribute('data-value', numericValue);
-        }
-
-        // Calculate and display results
-        function calculate() {
-            const inicial = parseFloat(document.getElementById('aporteInicial').getAttribute('data-value')) || 0;
-            const mensual = parseFloat(document.getElementById('aporteMensual').getAttribute('data-value')) || 0;
-            const años = parseInt(document.getElementById('años').value) || 1;
-            const rentabilidad = parseFloat(document.getElementById('rentabilidad').value) || 0;
-            
-            const data = calculateInvestment(inicial, mensual, años, rentabilidad);
-            const finalData = data[data.length - 1];
-            
-            // Update results display
-            document.getElementById('totalAportado').textContent = formatCLP(finalData.aportesAcumulados);
-            document.getElementById('ganancias').textContent = formatCLP(finalData.ganancias);
-            document.getElementById('montoFinal').textContent = formatCLP(finalData.valorTotal);
-            
-            // Update chart
-            updateChart(data);
-        }
-
-        // Form submission
-        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            calculate();
-        });
-
-        // Add event listeners for currency inputs
-        document.addEventListener('DOMContentLoaded', function() {
-            const currencyInputs = document.querySelectorAll('.currency-input');
-            
-            currencyInputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    handleCurrencyInput(this);
-                });
-                
-                input.addEventListener('blur', function() {
-                    calculate();
-                });
-            });
-        });
-
-        // Calculate on page load
-        calculate();
-
-        // Recalculate chart on dark mode change
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-            setTimeout(calculate, 100);
-        });
-    </script>
 </body>
 </html>

@@ -1,0 +1,178 @@
+:root {
+    --gradient-start: #f1f5f9;
+    --gradient-end: #e0e7ff;
+    --gradient-dark-start: #0f172a;
+    --gradient-dark-end: #1e293b;
+    --border-glass: rgba(93, 92, 222, 0.12);
+    --shadow-glass: 0 20px 45px rgba(93, 92, 222, 0.15);
+    --shadow-glass-dark: 0 24px 55px rgba(15, 23, 42, 0.45);
+}
+
+body {
+    background-image: radial-gradient(circle at top, rgba(93, 92, 222, 0.12), transparent 55%),
+                      linear-gradient(160deg, var(--gradient-start), var(--gradient-end));
+}
+
+.dark body {
+    background-image: radial-gradient(circle at top, rgba(99, 102, 241, 0.18), transparent 60%),
+                      linear-gradient(160deg, var(--gradient-dark-start), var(--gradient-dark-end));
+}
+
+.glass-surface {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-glass);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.glass-surface:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glass);
+}
+
+.dark .glass-surface {
+    border-color: rgba(148, 163, 184, 0.25);
+    box-shadow: var(--shadow-glass-dark);
+}
+
+.dark .glass-surface:hover {
+    box-shadow: 0 28px 60px rgba(15, 23, 42, 0.6);
+}
+
+.results-card {
+    border-radius: 1rem;
+    border: 1px solid rgba(93, 92, 222, 0.15);
+    backdrop-filter: blur(6px);
+}
+
+.dark .results-card {
+    border-color: rgba(148, 163, 184, 0.35);
+}
+
+.result-metric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.metric-high {
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+    font-weight: 700;
+}
+
+.chart-legend span::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 9999px;
+    margin-right: 0.5rem;
+}
+
+.chart-legend .legend-aportes::before {
+    background-color: #5D5CDE;
+}
+
+.chart-legend .legend-valor::before {
+    background-color: #10b981;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: clamp(18rem, 40vw, 26rem);
+}
+
+.primary-button {
+    background: linear-gradient(135deg, #3454D1, #4f6fe6);
+    box-shadow: 0 12px 28px rgba(52, 84, 209, 0.25);
+    transform: translateY(0);
+}
+
+.primary-button:hover {
+    background: linear-gradient(135deg, #2f4ac0, #425dda);
+    box-shadow: 0 16px 34px rgba(52, 84, 209, 0.3);
+    transform: translateY(-2px);
+}
+
+.primary-button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 18px rgba(52, 84, 209, 0.3);
+}
+
+.dark .primary-button {
+    background: linear-gradient(135deg, rgba(52, 84, 209, 0.9), rgba(92, 122, 234, 0.9));
+    box-shadow: 0 12px 28px rgba(23, 37, 84, 0.4);
+}
+
+.dark .primary-button:hover {
+    background: linear-gradient(135deg, rgba(47, 74, 192, 0.95), rgba(92, 122, 234, 0.95));
+}
+
+.investment-callout {
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    gap: 0.6rem;
+    background: linear-gradient(140deg, rgba(16, 185, 129, 0.12), rgba(93, 92, 222, 0.12));
+    border: 1px solid rgba(93, 92, 222, 0.2);
+}
+
+.dark .investment-callout {
+    background: linear-gradient(140deg, rgba(16, 185, 129, 0.2), rgba(93, 92, 222, 0.18));
+    border-color: rgba(148, 163, 184, 0.35);
+}
+
+.callout-title {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.dark .callout-title {
+    color: #e0f2f1;
+}
+
+.callout-body {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #334155;
+}
+
+.dark .callout-body {
+    color: #cbd5f5;
+}
+
+.callout-highlight {
+    font-weight: 700;
+    color: #0d9488;
+}
+
+.dark .callout-highlight {
+    color: #6ee7b7;
+}
+
+@media (max-width: 1024px) {
+    .glass-surface {
+        margin-inline: auto;
+        max-width: 640px;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .result-metric {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .metric-high {
+        align-self: flex-end;
+    }
+}
