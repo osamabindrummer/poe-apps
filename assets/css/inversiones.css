@@ -155,8 +155,8 @@ body {
 
 @media (max-width: 1024px) {
     .glass-surface {
-        margin-inline: auto;
-        max-width: 640px;
+        width: min(100% - 3rem, 640px);
+        margin-inline: clamp(1rem, 6vw, 1.5rem);
     }
 }
 
@@ -167,12 +167,23 @@ body {
 }
 
 @media (max-width: 640px) {
+    .glass-surface {
+        width: calc(100% - 2.5rem);
+        margin-inline: auto;
+    }
+
     .result-metric {
         flex-direction: column;
         align-items: flex-start;
     }
 
     .metric-high {
-        align-self: flex-end;
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .glass-surface {
+        width: calc(100% - 2rem);
     }
 }

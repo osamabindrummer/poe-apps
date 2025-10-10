@@ -86,6 +86,11 @@
         if (!canvas) return;
 
         const ctx = canvas.getContext('2d');
+        const labels = dataset.map((point) => `Año ${point.year}`);
+        const containerWidth = canvas.parentElement?.offsetWidth || window.innerWidth;
+        const approxLabelWidth = 80;
+        const maxTicks = Math.max(2, Math.floor(containerWidth / approxLabelWidth));
+        const tickStep = Math.max(1, Math.ceil(labels.length / maxTicks));
 
         if (growthChart) {
             growthChart.destroy();
@@ -98,7 +103,7 @@
         growthChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: dataset.map((point) => `Año ${point.year}`),
+                labels,
                 datasets: [
                     {
                         label: 'Aportes acumulados',
@@ -139,15 +144,23 @@
                             color: gridColor
                         },
                         ticks: {
-                            color: textColor
+                            color: textColor,
+                            maxTicksLimit: maxTicks,
+                            callback(value, index) {
+                                if (index % tickStep === 0) {
+                                    if (typeof value === 'number' && typeof this.getLabelForValue === 'function') {
+                                        return this.getLabelForValue(value);
+                                    }
+                                    return labels[index] ?? value;
+                                }
+                                return '';
+                            }
                         }
                     }
                 },
                 plugins: {
                     legend: {
-                        labels: {
-                            color: textColor
-                        }
+                        display: false
                     }
                 }
             }
@@ -215,5 +228,13 @@
 
         initCurrencyInputs();
         calculateAndRender();
+
+        let resizeTimeout = null;
+        window.addEventListener('resize', () => {
+            window.clearTimeout(resizeTimeout);
+            resizeTimeout = window.setTimeout(() => {
+                calculateAndRender();
+            }, 200);
+        });
     });
 })();
