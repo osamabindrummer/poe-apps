@@ -135,6 +135,100 @@ svg {
     gap: 0.5rem;
 }
 
+.home-price-group {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.home-price-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.currency-toggle-column {
+    align-self: flex-end;
+    display: inline-flex;
+    gap: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+}
+
+.currency-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(66, 153, 225, 0.08);
+    border-radius: 999px;
+}
+
+.currency-toggle-label {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(226, 232, 240, 0.9);
+    transition: 0.3s;
+    border-radius: 34px;
+}
+
+.switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: 0.3s;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+}
+
+.switch input:checked + .slider {
+    background: linear-gradient(135deg, #4299e1, #63b3ed);
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+@media (max-width: 768px) {
+    .home-price-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .currency-toggle-column {
+        align-self: stretch;
+        justify-content: center;
+    }
+}
+
 label {
     font-size: 0.95rem;
     color: var(--color-text-secondary);
@@ -351,6 +445,10 @@ input:focus {
 
 .callout .icon {
     font-size: 1.5rem;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .footer-note {
