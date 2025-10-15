@@ -21,9 +21,19 @@
                 <p>Crédito hipotecario</p>
             </div>
             <div class="panel-content">
-                <div class="input-group">
-                    <label for="homePrice">Valor de la Propiedad (CLP)</label>
-                    <input type="text" id="homePrice" class="currency-input" placeholder="Ej: 100.000.000">
+                <div class="input-group home-price-group">
+                    <div class="home-price-field">
+                        <label for="homePrice" id="homePriceLabel" data-home-price-label>Valor de la Propiedad (CLP)</label>
+                        <input type="text" id="homePrice" class="currency-input" placeholder="Ej: 100.000.000" data-home-price-input>
+                    </div>
+                    <div class="currency-toggle-column currency-toggle" role="group" aria-label="Selecciona la moneda del valor de la propiedad">
+                        <span class="currency-toggle-label">CLP</span>
+                        <label class="switch">
+                            <input type="checkbox" id="dividendCurrencyToggle" aria-label="Alternar valor de la propiedad entre CLP y UF">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="currency-toggle-label">UF</span>
+                    </div>
                 </div>
                 
                 <div class="input-group">
@@ -40,12 +50,20 @@
                     <label for="loanTerm">Plazo del Crédito (años)</label>
                     <input type="number" id="loanTerm" placeholder="Ej: 25" value="25">
                 </div>
-                
+
+                <div class="input-group hidden" data-uf-input-group>
+                    <label for="ufValue">Valor UF actual (CLP)</label>
+                    <input type="number" id="ufValue" min="1" step="0.01" value="36000">
+                    <p class="helper-text">Se proyecta un crecimiento anual de 3,5&nbsp;%.</p>
+                </div>
+
                 <button type="button" class="calculate-btn">Calcular Compra</button>
 
                 <div class="monthly-payment-container">
                     <h3>Dividendo mensual estimado</h3>
-                    <div class="amount">$<span id="monthlyPayment">0</span></div>
+                    <div class="amount"><span id="monthlyPaymentPrefix">$</span><span id="monthlyPayment">0</span></div>
+                    <p class="helper-text" id="monthlyPaymentExplanation"></p>
+                    <p class="helper-text" id="monthlyPaymentRentHint"></p>
                 </div>
 
                 <div class="results-summary">
@@ -54,8 +72,9 @@
                         <div class="value">$<span id="downPaymentResult">0</span></div>
                     </div>
                     <div class="result-card">
-                        <h3>Costo Total</h3>
+                        <h3 id="totalCostLabel">Costo Total</h3>
                         <div class="value">$<span id="totalCostBuy">0</span></div>
+                        <p class="helper-text" id="totalCostHelper"></p>
                     </div>
                 </div>
             </div>
