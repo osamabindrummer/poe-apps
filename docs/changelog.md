@@ -1,5 +1,12 @@
 # Changelog
 
+## 2025-10-15
+
+- **compraroarrendar.html**: reorganicé el campo de valor de la propiedad para alojar el selector CLP/UF en una columna lateral, sin desalinear los botones de cálculo.
+- **assets/js/compraroarrendar.js**: permití ingresar valores en UF convirtiéndolos internamente a CLP, recalculé el pie y totales con reajuste anual de 3,5 % y aclaré los textos cuando se usa UF.
+- **assets/css/compraroarrendar.css**: añadí estilos para la columna del toggle, manteniendo el layout en desktop y mobile.
+- **docs/sketch-valor-propiedad-toggle.md**: documenté un sketch ASCII del nuevo posicionamiento del selector de moneda.
+
 ## 2025-10-10
 
 - **assets/css/inversiones.css**: afiné los breakpoints móviles para que `.glass-surface` ajuste su ancho y márgenes según el dispositivo; corregí la alineación de métricas destacadas en pantallas pequeñas y añadí un corte específico para 480 px.
