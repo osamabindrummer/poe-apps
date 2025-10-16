@@ -236,19 +236,23 @@
         const monthlyUfGrowthFactor = Math.pow(1 + UF_ANNUAL_GROWTH_RATE, 1 / 12);
         let totalDividendsClp = 0;
         let currentUfValue = ufValue;
+        let lastMonthPaymentClp = 0;
 
         for (let month = 0; month < numberOfPayments; month += 1) {
-            totalDividendsClp += monthlyPaymentUf * currentUfValue;
+            const paymentClp = monthlyPaymentUf * currentUfValue;
+            totalDividendsClp += paymentClp;
+            lastMonthPaymentClp = paymentClp;
             currentUfValue *= monthlyUfGrowthFactor;
         }
 
         const totalCost = Math.round(totalDividendsClp + downPaymentValue);
         const firstMonthPaymentClp = monthlyPaymentUf * ufValue;
+        const lastMonthPaymentClpRounded = Math.round(lastMonthPaymentClp);
 
         outputs.monthlyPayment.textContent = ufFormatter.format(monthlyPaymentUf);
         outputs.totalCostBuy.textContent = currencyFormatter.format(totalCost);
         controls.monthlyPaymentPrefix.textContent = 'UF';
-        controls.monthlyPaymentExplanation.textContent = `≈ $${currencyFormatter.format(Math.round(firstMonthPaymentClp))} en la cuota 1.`;
+        controls.monthlyPaymentExplanation.textContent = `≈ $${currencyFormatter.format(Math.round(firstMonthPaymentClp))} en la cuota 1 y ≈ $${currencyFormatter.format(lastMonthPaymentClpRounded)} en la cuota ${numberOfPayments}.`;
 
         const monthlyRentValue = unformatNumber(inputs.monthlyRent.value);
         if (monthlyRentValue) {
@@ -257,7 +261,7 @@
             controls.monthlyPaymentRentHint.textContent = '';
         }
 
-        controls.totalCostLabel.textContent = `Costo Total (pie + sumatoria de ${numberOfPayments} cuotas)`;
+        controls.totalCostLabel.textContent = `Costo Total (pie + ${numberOfPayments} cuotas)`;
         controls.totalCostHelper.textContent = 'Incluye reajuste UF proyectado al 3,5% anual.';
 
         updateMonthlyInvestment(firstMonthPaymentClp);

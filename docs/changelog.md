@@ -1,6 +1,12 @@
 # Changelog
 
-## 2025-10-15
+## 2025-10-16
+
+- **compraroarrendar.html**: añadí un callout informativo en el panel de compra, fijé la tasa por defecto en 4,5 % con 20 años de plazo editable, enlacé la UF a “Datos SII” y actualicé la rentabilidad base del panel de inversión al 10 %.
+- **assets/css/compraroarrendar.css**: adapté el estilo del callout del panel “Comprar” para usar la paleta rojiza y conservar la coherencia visual con el resto de la página.
+- **assets/js/compraroarrendar.js**: ajusté la etiqueta dinámica a “Costo Total (pie + n cuotas)” y, en escenarios UF, mostré el valor de la primera y última cuota en CLP dentro del mensaje de apoyo del dividendo.
+
+## 2025-10-15 (Codex Cloud)
 
 - **compraroarrendar.html**: reorganicé el campo de valor de la propiedad para alojar el selector CLP/UF en una columna lateral, sin desalinear los botones de cálculo.
 - **assets/js/compraroarrendar.js**: permití ingresar valores en UF convirtiéndolos internamente a CLP, recalculé el pie y totales con reajuste anual de 3,5 % y aclaré los textos cuando se usa UF.

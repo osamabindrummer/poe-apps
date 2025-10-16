@@ -447,6 +447,12 @@ input:focus {
     font-size: 1.5rem;
 }
 
+.buy-panel .callout {
+    background: rgba(229, 62, 62, 0.12);
+    border-color: rgba(229, 62, 62, 0.4);
+    color: #822727;
+}
+
 .hidden {
     display: none !important;
 }

@@ -43,18 +43,17 @@
                 
                 <div class="input-group">
                     <label for="interestRate">Tasa de Interés Anual (%) – <a href="https://si3.bcentral.cl/Siete/ES/Siete/Cuadro/CAP_TASA_INTERES/MN_TASA_INTERES_09/TSF_27A/T5224" target="_blank" rel="noopener noreferrer">Datos Banco Central</a></label>
-                    <input type="number" id="interestRate" placeholder="Ej: 5" step="0.01" value="5">
+                    <input type="number" id="interestRate" placeholder="Ej: 5" step="0.01" value="4.5">
                 </div>
                 
                 <div class="input-group">
                     <label for="loanTerm">Plazo del Crédito (años)</label>
-                    <input type="number" id="loanTerm" placeholder="Ej: 25" value="25">
+                    <input type="number" id="loanTerm" placeholder="Ej: 20" value="20">
                 </div>
 
                 <div class="input-group hidden" data-uf-input-group>
-                    <label for="ufValue">Valor UF actual (CLP)</label>
+                    <label for="ufValue">Valor UF actual (CLP) – <a href="https://www.sii.cl/valores_y_fechas/uf/uf2025.htm" target="_blank" rel="noopener noreferrer">Datos SII</a></label>
                     <input type="number" id="ufValue" min="1" step="0.01" value="36000">
-                    <p class="helper-text">Se proyecta un crecimiento anual de 3,5&nbsp;%.</p>
                 </div>
 
                 <button type="button" class="calculate-btn">Calcular Compra</button>
@@ -76,6 +75,11 @@
                         <div class="value">$<span id="totalCostBuy">0</span></div>
                         <p class="helper-text" id="totalCostHelper"></p>
                     </div>
+                </div>
+
+                <div class="callout">
+                    <span class="icon">ℹ️</span>
+                    <span>El dividendo estimado y el costo total calculado no incluyen todos los costos financieros efectivos de un crédito hipotecario, como seguros obligatorios (desgravamen, incendio y sismo) ni comisiones y gastos administrativos (tasación, notaría, estudio de títulos, inscripción en el Conservador, etc.).</span>
                 </div>
             </div>
         </div>
@@ -105,7 +109,7 @@
                 
                 <div class="input-group">
                     <label for="annualReturn">Rentabilidad Anual (%)</label>
-                    <input type="number" id="annualReturn" placeholder="Ej: 7" step="0.1" value="7">
+                    <input type="number" id="annualReturn" placeholder="Ej: 10" step="0.1" value="10">
                 </div>
 
                 <button type="button" class="calculate-btn">Calcular Inversión</button>
