@@ -5,3 +5,7 @@ Este directorio contiene tres herramientas interactivas desarrolladas en HTML, C
 - [`compraroarrendar.html`](https://osamabindrummer.github.io/poe-apps/compraroarrendar.html): comparador financiero que contrasta la compra de una vivienda (simulando dividendo, pie, costo total y valorización futura) versus arrendar e invertir la diferencia, recomendando la mejor opción en función del patrimonio proyectado.
 - [`coordenadas.html`](https://osamabindrummer.github.io/poe-apps/coordenadas.html): conversor de coordenadas UTM ↔ geográficas con ajustes para zonas chilenas, carga masiva desde texto, tabla de resultados exportable y guías visuales para minimizar errores de formato.
 - [`inversiones.html`](https://osamabindrummer.github.io/poe-apps/inversiones.html): calculadora de inversiones con interés compuesto que estima aportes, ganancias y monto final; incluye visualización gráfica con Chart.js y admite modo claro/oscuro usando Tailwind CSS.
+
+## Uso en Linux
+
+[Guía para Linux](LINUX.md): instalación y apertura local desde la terminal.
